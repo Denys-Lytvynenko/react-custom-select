@@ -1,6 +1,8 @@
 import { useState } from "react";
-import Select from "./components/Select/Select";
+
 import { SelectOption } from "./components/Select/types";
+
+import Select from "./components/Select/Select";
 
 /**
  * Mocked data
@@ -13,7 +15,7 @@ const options: SelectOption[] = [
     { label: "Fifth", value: 5 },
 ];
 
-function App() {
+const App = () => {
     const [value, setValue] = useState<typeof options[0] | undefined>(
         options[0]
     );
@@ -27,6 +29,6 @@ function App() {
             />
         </div>
     );
-}
+};
 
 export default App;
