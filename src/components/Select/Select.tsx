@@ -4,7 +4,15 @@ import { SelectOption, SelectProps } from "./types";
 
 import styles from "./select.module.css";
 
-const Select: FC<SelectProps> = ({ value, onChange, options }) => {
+const noOptions: SelectOption[] = [
+    { label: "Options are empty", value: "Options are empty" },
+];
+
+const Select: FC<SelectProps> = ({
+    onChange,
+    value = noOptions[0],
+    options = noOptions,
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState<
         number | undefined

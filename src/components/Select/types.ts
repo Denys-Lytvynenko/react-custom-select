@@ -4,7 +4,7 @@ export type SelectOption = {
 };
 
 export type SelectProps = {
-    options: SelectOption[];
     onChange: (value: SelectOption | undefined) => void;
+    options?: SelectOption[];
     value?: SelectOption;
 };

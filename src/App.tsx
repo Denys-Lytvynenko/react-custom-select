@@ -4,6 +4,8 @@ import { SelectOption } from "./components/Select/types";
 
 import Select from "./components/Select/Select";
 
+import "./App.css";
+
 /**
  * Mocked data
  */
@@ -21,7 +23,7 @@ const App = () => {
     );
 
     return (
-        <div>
+        <div className="container">
             <Select
                 options={options}
                 value={value}
