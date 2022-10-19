@@ -18,16 +18,22 @@ const options: SelectOption[] = [
 ];
 
 const App = () => {
-    const [value, setValue] = useState<typeof options[0] | undefined>(
-        options[0]
-    );
+    const [value1, setValue1] = useState<SelectOption | undefined>(options[0]);
+    const [value2, setValue2] = useState<SelectOption[] | []>([]);
 
     return (
         <div className="container">
             <Select
                 options={options}
-                value={value}
-                onChange={o => setValue(o)}
+                value={value1}
+                onChange={o => setValue1(o)}
+            />
+
+            <Select
+                multiple
+                options={options}
+                value={value2}
+                onChange={o => setValue2(o)}
             />
         </div>
     );

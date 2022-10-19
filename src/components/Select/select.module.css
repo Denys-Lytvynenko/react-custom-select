@@ -17,6 +17,9 @@
 
 .value {
     flex-grow: 1;
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
 }
 
 .clear-btn {
@@ -79,4 +82,32 @@
 .option.highlighted {
     background-color: lightblue;
     color: white;
+}
+
+.option-badge {
+    display: flex;
+    align-items: center;
+    border: 0.05em solid #777;
+    padding: 0.15em 0.25em;
+    border-radius: 0.25em;
+    gap: 0.25em;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    font-size: 1em;
+}
+
+.option-badge:hover,
+.option-badge:focus {
+    background-color: lightyellow;
+    border-color: lightcoral;
+}
+
+.option-badge:hover > .remove-btn,
+.option-badge:focus > .remove-btn {
+    color: darkred;
+}
+
+.option-badge > .remove-btn {
+    color: #777;
 }
