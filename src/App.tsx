@@ -26,14 +26,14 @@ const App = () => {
             <Select
                 options={options}
                 value={value1}
-                onChange={o => setValue1(o)}
+                onChange={(o) => setValue1(o)}
             />
 
             <Select
                 multiple
                 options={options}
                 value={value2}
-                onChange={o => setValue2(o)}
+                onChange={(o) => setValue2(o)}
             />
         </div>
     );

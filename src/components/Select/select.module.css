@@ -9,6 +9,7 @@
     padding: 0.5em;
     border-radius: 0.25em;
     outline: none;
+    transition: all 0.2s ease;
 }
 
 .container:focus {
@@ -30,6 +31,7 @@
     cursor: pointer;
     padding: 0;
     font-size: 1.25em;
+    transition: all 0.2s ease;
 }
 
 .clear-btn:focus,
@@ -54,7 +56,8 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
     min-height: 0em;
     overflow: auto;
     border: 0.05em solid #777;
@@ -64,15 +67,19 @@
     top: calc(100% + 0.25em);
     background-color: white;
     z-index: 100;
+    transition: all 0.3s ease;
 }
 
 .options.show {
-    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .option {
     padding: 0.25em 0.5em;
     cursor: pointer;
+    background-color: transparent;
+    transition: all 0.1s ease;
 }
 
 .option.selected {
@@ -95,6 +102,8 @@
     background: none;
     outline: none;
     font-size: 1em;
+    background-color: transparent;
+    transition: all 0.2s ease;
 }
 
 .option-badge:hover,

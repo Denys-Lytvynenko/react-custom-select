@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { SelectOption, SelectProps } from "./types";
 
@@ -13,27 +13,32 @@ const Select: FC<SelectProps> = ({
     onChange,
     value,
     options = noOptions,
+    className,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
 
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const clearOptions = () => {
+    const clearOptions = useCallback(() => {
         multiple ? onChange([]) : onChange(undefined);
-    };
+    }, [multiple, onChange]);
 
-    const selectOption = (option: SelectOption) => {
-        if (multiple) {
-            if (value.includes(option)) {
-                onChange(value.filter(o => o !== option));
+    const selectOption = useCallback(
+        (option: SelectOption) => {
+            if (multiple) {
+                if (value.includes(option)) {
+                    onChange(value.filter((o) => o !== option));
+                } else {
+                    onChange([...value, option]);
+                }
             } else {
-                onChange([...value, option]);
+                if (option !== value) onChange(option);
             }
-        } else {
-            if (option !== value) onChange(option);
-        }
-    };
+        },
+        [multiple, onChange, value]
+    );
+
     const isOptionSelected = (option: SelectOption) =>
         multiple ? value.includes(option) : option === value;
 
@@ -42,13 +47,18 @@ const Select: FC<SelectProps> = ({
     }, [isOpen]);
 
     useEffect(() => {
-        const handler = (e: KeyboardEvent) => {
+        const currentRef = containerRef.current;
+
+        /**
+         * Keyboard handler function
+         */
+        const handler = (e: KeyboardEvent): void => {
             if (e.target !== currentRef) return;
 
             switch (e.code) {
                 case "Enter":
                 case "Space":
-                    setIsOpen(prev => !prev);
+                    setIsOpen((prev) => !prev);
                     if (isOpen) selectOption(options[highlightedIndex]);
                     break;
                 case "ArrowUp":
@@ -65,19 +75,21 @@ const Select: FC<SelectProps> = ({
                         setHighlightedIndex(newValue);
                     }
                     break;
+                case "Delete":
+                    clearOptions();
+                    break;
                 case "Escape":
                     setIsOpen(false);
                     break;
             }
         };
 
-        const currentRef = containerRef.current;
         currentRef?.addEventListener("keydown", handler);
 
         return () => {
             currentRef?.removeEventListener("keydown", handler);
         };
-    }, [isOpen, highlightedIndex, options, selectOption]);
+    }, [isOpen, highlightedIndex, options, selectOption, clearOptions]);
 
     return (
         <div
@@ -85,14 +97,14 @@ const Select: FC<SelectProps> = ({
             onClick={() => setIsOpen(!isOpen)}
             onBlur={() => setIsOpen(false)}
             tabIndex={0}
-            className={styles.container}
+            className={`${styles.container} ${className ? className : ""}`}
         >
             <div className={styles.value}>
                 {multiple
-                    ? value.map(v => (
+                    ? value.map((v) => (
                           <button
                               key={v.value}
-                              onClick={e => {
+                              onClick={(e) => {
                                   e.stopPropagation();
                                   selectOption(v);
                               }}
@@ -108,7 +120,7 @@ const Select: FC<SelectProps> = ({
             </div>
 
             <button
-                onClick={e => {
+                onClick={(e) => {
                     e.stopPropagation();
                     clearOptions();
                 }}
@@ -116,13 +128,15 @@ const Select: FC<SelectProps> = ({
             >
                 &times;
             </button>
+
             <div className={styles.divider}></div>
+
             <div className={styles.caret}></div>
 
             <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
                 {options.map((option, index) => (
                     <li
-                        onClick={e => {
+                        onClick={(e) => {
                             e.stopPropagation();
                             selectOption(option);
                             setIsOpen(false);

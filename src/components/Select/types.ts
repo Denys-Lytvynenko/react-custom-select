@@ -17,4 +17,5 @@ export type MultipleSelectProps = {
 
 export type SelectProps = {
     options?: SelectOption[];
+    className?: string;
 } & (SingleSelectProps | MultipleSelectProps);
