@@ -1,5 +1,5 @@
 {
-    "name": "react-custom-select",
+    "name": "react-custom-search-select-component",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -41,4 +41,3 @@
         ]
     }
 }
-
